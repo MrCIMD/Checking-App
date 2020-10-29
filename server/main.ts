@@ -1,9 +1,12 @@
-import dotenv from "dotenv";
+// Nest
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
+// Modules
 import { AppModule } from "./app.module";
 import { LogicModule } from "./logics/logic.module";
 import { NextModule } from "./logics/next/next.module";
+// Libs
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -18,9 +21,9 @@ dotenv.config();
     .get(NextModule)
     .prepare()
     .then(() => {
-      app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+      app.listen(AppModule.PORT, AppModule.HOST, () => {
         console.log(
-          `[ ARK ] Ready on ${process.env.APP_PROTOCOL}://${process.env.APP_HOST}:${process.env.APP_PORT}`,
+          `[  Checking-App  ] Ready on ${AppModule.PROTOCOL}://${AppModule.HOST}:${AppModule.PORT}`,
         );
       });
     });
