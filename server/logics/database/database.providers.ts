@@ -20,11 +20,11 @@ export const databaseProviders = [
         username: config.get(Configuration.TYPEORM_USERNAME),
         password: config.get(Configuration.TYPEORM_PASSWORD),
         database: config.get(Configuration.TYPEORM_DATABASE),
-        synchronize: true,
-        entities: [__dirname + "/../../entities/*.entity{.ts,.js}"],
-        migrations: [__dirname + "/migrations/*{.ts,.js}"],
+        synchronize: config.get(Configuration.TYPEORM_SYNCHRONIZE) === "true",
+        entities: [`${__dirname}/../../entities/*.entity{.ts,.js}`],
+        migrations: [`${__dirname}/migrations/*{.ts,.js}`],
         cli: {
-          migrationsDir: __dirname + "/migrations/",
+          migrationsDir: `${__dirname}/migrations/`,
         },
       } as ConnectionOptions;
     },
