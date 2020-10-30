@@ -3,13 +3,19 @@ import {
   Get,
   Req,
   Res,
+  UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import {
   Request,
   Response,
 } from 'express';
-import { NextService } from '../logics/next/next.service';
+import { AuthExceptionFilter } from './../../../logics/auth/filters/auth-exceptions.filter';
+import { AuthenticatedGuard } from './../../../logics/auth/guards';
+import { NextService } from '../../../logics/next/next.service';
 
+@UseFilters(AuthExceptionFilter)
+@UseGuards(AuthenticatedGuard)
 @Controller()
 export class HomeController {
   constructor(

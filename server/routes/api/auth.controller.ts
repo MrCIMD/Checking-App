@@ -10,7 +10,7 @@ import {
   LoginGuard,
 } from '../../logics/auth/guards';
 
-@Controller('api/auth')
+@Controller()
 export class ApiAuthController {
   @Post('register')
   @UseGuards(RegisterGuard)

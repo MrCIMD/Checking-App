@@ -3,10 +3,13 @@ import {
   Get,
   Req,
   Res,
+  UseFilters,
 } from '@nestjs/common';
-import { NextService } from '../logics/next/next.service';
+import { AuthExceptionFilter } from '../../..//logics/auth/filters/auth-exceptions.filter';
+import { NextService } from '../../../logics/next/next.service';
 
-@Controller('auth')
+@UseFilters(AuthExceptionFilter)
+@Controller()
 export class AuthController {
   constructor(
     private readonly next: NextService,

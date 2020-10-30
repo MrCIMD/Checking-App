@@ -7,9 +7,11 @@ import {
 } from "@nestjs/common";
 import { NextModule } from "./logics/next/next.module";
 import { LogicModule } from "./logics/logic.module";
-import { RouteModule } from "./routes/route.module";
+import { WebModule } from "./routes/web.module";
 import { EnvModule } from "./logics/env/env.module";
 import { DatabaseModule } from "./logics/database/database.module";
+import { AppRoutingModule } from "./app-routing.module";
+import { ApiModule } from "./routes/api/api.module";
 // Middleware
 import { NextMiddleware } from "./logics/next/next.middleware";
 // Services
@@ -17,13 +19,8 @@ import { EnvService } from "./logics/env/env.service";
 // Enums
 import { Configuration } from "./logics/env/env.keys";
 
-import {
-  RedirectIfAuthenticatedMiddleware,
-  RedirectIfNotAuthenticatedMiddleware,
-} from "./logics/auth/middlewares";
-
 @Module({
-  imports: [DatabaseModule, EnvModule, NextModule, LogicModule, RouteModule],
+  imports: [AppRoutingModule, DatabaseModule, EnvModule, NextModule, LogicModule, WebModule, ApiModule],
 })
 export class AppModule implements NestModule {
   static PORT: number | string;
@@ -37,25 +34,7 @@ export class AppModule implements NestModule {
   }
 
   public configure(consumer: MiddlewareConsumer) {
-    this.handleRoutes(consumer);
     this.handleAssets(consumer);
-  }
-
-  private handleRoutes(consumer: MiddlewareConsumer): void {
-    consumer.apply(RedirectIfAuthenticatedMiddleware).forRoutes({
-      path: "auth/register",
-      method: RequestMethod.GET,
-    });
-
-    consumer.apply(RedirectIfAuthenticatedMiddleware).forRoutes({
-      path: "auth/login",
-      method: RequestMethod.GET,
-    });
-
-    consumer.apply(RedirectIfNotAuthenticatedMiddleware).forRoutes({
-      path: "",
-      method: RequestMethod.GET,
-    });
   }
 
   private handleAssets(consumer: MiddlewareConsumer): void {

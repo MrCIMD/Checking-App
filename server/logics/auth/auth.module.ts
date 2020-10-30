@@ -9,6 +9,7 @@ import {
   LocalRegisterStrategy,
   LocalLoginStrategy,
 } from './strategies';
+import { ApiAuthController } from './../../routes/api/auth.controller';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import {
   exports: [
     AuthService,
   ],
+  controllers: [ApiAuthController]
 })
 export class AuthModule {
   constructor(
